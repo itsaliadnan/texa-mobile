@@ -1,0 +1,175 @@
+{
+  "home": {
+    "title": "الرئيسية",
+    "hello": "مرحبًا ",
+    "username": "محمد شكري",
+    "balance": "الرصيد",
+    "transfers": "التحويلات المالية",
+    "view_all": "عرض الكل",
+    "account_balance": "رصيد حسابك",
+    "transaction_bexy_title": "تحويل إلى مشروع Bexy",
+    "transaction_bexy_date": "2024-07-01 12:00",
+    "transaction_bexy_amount": "- 250,000 د.ع",
+    "transaction_alpha_title": "تحويل إلى مشروع Alpha",
+    "transaction_alpha_date": "2024-07-02 14:30",
+    "transaction_alpha_amount": "- 180,000 د.ع",
+    "transfer_buttons": {
+      "transfer": "تحويل",
+      "deposit": "إيداع"
+    }
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "empty": "لا توجد إشعارات حالياً",
+    "types": {
+      "transfer_success": {
+        "title": "تم تحويل الأموال بنجاح",
+        "body": "تم تحويل مبلغ 250,000 د.ع من محفظتك إلى مشروع Bexy. شكرًا لاستخدامك نظامنا."
+      },
+      "new_project": {
+        "title": "مشروع جديد مضاف",
+        "body": "تم إضافة مشروع جديد بنجاح. اسم المشروع: Texa."
+      },
+      "balance_usage": {
+        "title": "استهلاك الرصيد",
+        "body": "تم خصم مبلغ 250,000 د.ع من محفظتك بسبب إرسال 1512 رسالة عبر مشروع Bexy."
+      }
+    }
+  },
+  "projects": {
+    "title": "المشاريع",
+    "list": "قائمة",
+    "bexy": "بيكسي",
+    "texa": "تيكسا",
+    "project_details": { 
+      "title": "تفاصيل المشروع",
+      "name": "اسم المشروع",
+      "description": "الوصف",
+      "manager": "مدير المشروع",
+      "created_at": "تاريخ الإنشاء"
+    
+    }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "name": "كريم عامر",
+    "phone": "07800000000",
+    "notifications": "الإشعارات",
+    "language": "اللغة",
+    "logout": "تسجيل خروج",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
+    "theme": "الوضع",
+    "system": "النظام",
+    "light_mode": "الوضع الفاتح",
+    "dark_mode": "الوضع الداكن",
+    "notification_settings": { 
+      "title": "إعدادات الإشعارات",
+      "all": "تفعيل كل الإشعارات",
+      "transfers": "التحويلات",
+      "invoices": "الفواتير",
+      "messages": "الرسائل",
+      "notifications": "الإشعارات",
+      "transfers_only": " اشعارات التحويلات فقط",
+      "invoices_only": " اشعارات الفواتير فقط"
+    }
+  },
+  "transfer": {
+    "filter_title": "فلترة التحويلات",
+    "operation_type": "نوع العملية",
+    "type_transfer": "تحويل",
+    "type_deposit": "إيداع",
+    "apply_filter": "تطبيق الفلتر"
+  },
+
+  "message_type": {
+    "whatsapp": "واتساب",
+    "insideIraq": "داخل العراق",
+    "outsideIraq": "خارج العراق"
+
+  },
+  "message_status": {
+    "sent": "تم الإرسال",
+    "failed": "فشل",
+    "pending":"معلق"
+  },
+  "project_Messages_D": {
+  "messageDetails": "تفاصيل الرسالة"
+},
+  "common": {
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "yes": "نعم",
+    "no": "لا"
+  },
+    "balance_card": {
+    "hidden": " ******",
+    "visible": "د.ع 1,200,000",
+    "account_balance": "رصيد حسابك"
+  },
+  "transaction_details": {
+    "title": "عملية التحويل ",
+    "project": "المشروع",
+    "amount": "المبلغ",
+    "date": "التاريخ",
+    "transfer_amount":"180,000 د.ع",
+    "transfer_status":"تم بنجاح",
+    "transfer_date":"2024-07-02 14:30",
+    "to":"الى",
+    "from":"من",
+    "sender":"محمد كامل",
+    "receiver":"بيكسي ",
+    "extra_info":"معلومات اضافية",
+    "transaction_id":"رمز المعاملة",
+    "invoice":"فاتورة",
+    "id":"#421451"
+
+    
+  },
+
+
+  "full_transfer_details": {
+    "title": "تفاصيل التحويل",
+    "bexy": "Bexy",
+    "alpha": "Alpha",
+    "sport_app": "تطبيق للتمارين الرياضية",
+    "sport_app_date": "2024-07-02 14:30",
+    "sport_app_amount": "- 180,000 IQD",
+    "sport_app_manager": "أحمد كريم",
+    "sport_app_created_at": "2023-11-10"
+
+  },
+  "message_dialog": {
+  
+    "message": "عذرا, لم يتمكن النظام من اتمام عملية تحويل الاموال . يرجى التحقق من رصيد المحفظة او اعادة المحاولة لاحقا"
+  },
+  "transfer_page": {
+    "title": "تحويل مالي",
+    "trnsfer_money_easly": "تحويل الاموال بسهولة",
+    "transfer_money_to_project": "انقل الاموال من محفظتك الى مشاريعك بكل سهولة لضمان استمرارية العمل وادارة سلسة",
+    "from":"من",
+    "to":"الى",
+    "amount":"المبلغ",
+    "texa":"تيكسا",
+    "bexy":"بيكسي",
+    "mohammed_shakeri":"محمد شكري",
+    "mohammed_kamel":"محمد كامل",
+    "transfer":"تحويل"
+  },
+  "register": {
+    "title": "تسجيل دخول",
+    "full_name": "اسمك الكامل",
+    "phone_number": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "fill_info": "املأ المعلومات أدناه لبدء رحلتك معنا.",
+    "terms_and_conditions": "من خلال تحديد المربع فإنك توافق على الشروط والأحكام الخاصة بنا."
+  },
+  "login":{"login":"تسجيل الدخول",
+  "password":"كلمة السر ",
+  " phone_number":"رقم الهاتف"
+
+  }
+
+
+}

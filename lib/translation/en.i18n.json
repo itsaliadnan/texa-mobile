@@ -1,0 +1,166 @@
+{
+  "home": {
+    "title": "Home",
+    "hello": "Hello ",
+    "username": "Mohammed Shukri",
+    "balance": "Balance",
+    "transfers": "Transactions",
+    "view_all": "View All",
+    "account_balance": "Your account balance",
+    "transaction_bexy_title": "Transfer to project Bexy",
+    "transaction_bexy_date": "2024-07-01 12:00",
+    "transaction_bexy_amount": "- 250,000 IQD",
+    "transaction_alpha_title": "Transfer to project Alpha",
+    "transaction_alpha_date": "2024-07-02 14:30",
+    "transaction_alpha_amount": "- 180,000 IQD",
+    "transfer_buttons": {
+      "transfer": "Transfer",
+      "deposit": "Deposit"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications available",
+    "types": {
+      "transfer_success": {
+        "title": "Transfer Successful",
+        "body": "An amount of 250,000 IQD has been transferred from your wallet to project Bexy. Thank you for using our system."
+      },
+      "new_project": {
+        "title": "New Project Added",
+        "body": "A new project has been successfully added. Project name: Texa."
+      },
+      "balance_usage": {
+        "title": "Balance Usage",
+        "body": "An amount of 250,000 IQD has been deducted from your wallet due to sending 1512 messages via project Bexy."
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "list": "List",
+    "bexy": "Bexy",
+    "texa": "Texa",
+    "project_details": {
+      "title": "Project Details",
+      "name": "Project Name",
+      "description": "Description",
+      "manager": "Project Manager",
+      "created_at": "Created At"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "name": "Kareem Amer",
+    "phone": "07800000000",
+    "notifications": "Notifications",
+    "language": "Language",
+    "logout": "Logout",
+    "arabic": "Arabic",
+    "english": "English",
+    "theme": "Theme",
+    "system": "System",
+    "light_mode": "Light Mode",
+    "dark_mode": "Dark Mode",
+    "notification_settings": {
+      "title": "Notification Settings",
+      "all": "All Notifications Enable",
+      "transfers": "Transfers",
+      "invoices": "Invoices",
+      "messages": "Messages",
+      "notifications": "Notifications",
+      "transfers_only": "Transfers Notifications Only",
+      "invoices_only": "Invoices Notifications Only"
+    }
+  },
+  "transfer": {
+    "filter_title": "Transfer Filter",
+    "operation_type": "Operation Type",
+    "type_transfer": "Transfer",
+    "type_deposit": "Deposit",
+    "apply_filter": "Apply Filter"
+  },
+  "message_type": {
+    "whatsapp": "Whatsapp",
+    "insideIraq": "Inside Iraq",
+    "outsideIraq": "Outside Iraq"
+  },
+  "message_status": {
+    "sent": "Sent",
+    "failed": "Failed",
+    "pending":"Pending"
+  },
+  "project_Messages_D": {
+    "messageDetails": "Message Details"
+  },
+  
+  "common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "balance_card": {
+    "hidden": " *******",
+    "visible": "IQD 1,200,000",
+    "account_balance": " account balance"
+  },
+  "transaction_details": {
+    "title": "Transfer Process",
+    "project": "Project",
+    "amount": "Amount",
+    "date": "Date",
+    "transfer_amount": "180,000 IQD",
+    "transfer_status": "Success",
+    "transfer_date": "2024-07-02 14:30",
+    "to": "To",
+    "from": "From",
+    "sender": "Mohammed Kamel",
+    "receiver": "Bexy",
+    "extra_info": "Extra Info",
+    "transaction_id": "Transaction ID",
+    "invoice": "Invoice",
+    "id": "#421451"
+  },
+  
+  "full_transfer_details": {
+    "title": "Transfer Details",
+    "bexy": "Bexy",
+    "alpha": "Alpha",
+    "sport_app": "Sport App",
+    "sport_app_date": "2024-07-02 14:30",
+    "sport_app_amount": "- 180,000 IQD",
+    "sport_app_manager": "Ahmed Kareem",
+    "sport_app_created_at": "2023-11-10"
+  },
+  "message_dialog": {
+    "message": "Sorry, the system was unable to complete the transfer. Please check your wallet balance or try again later."
+  },
+  "transfer_page": {
+    "title": "Money Transfer",
+    "trnsfer_money_easly": "Transfer money easily",
+    "transfer_money_to_project": "Transfer money from your wallet to your projects easily to ensure continuous work and smooth management",
+    "from": "From",
+    "to": "To",
+    "amount": "Amount",
+    "texa": "Texa",
+    "bexy": "Bexy",
+    "mohammed_shakeri": "Mohammed Shakeri",
+    "mohammed_kamel": "Mohammed Kamel",
+    "transfer": "Transfer"
+  },
+  "register": {
+    "title": "login",
+    "full_name": "Full Name",
+    "phone_number": "Phone Number",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "fill_info": "Fill in the information below to start your journey with us.",
+    "terms_and_conditions": "By checking the box, you agree to our terms and conditions."
+  },
+  "login":{"login":" Login",
+  "password":" Password ",
+  " phone_number":" Phonenumber"
+
+  }
+}
