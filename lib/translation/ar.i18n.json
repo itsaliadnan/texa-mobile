@@ -169,7 +169,14 @@
   "password":"كلمة السر ",
   " phone_number":"رقم الهاتف"
 
-  }
+  },
+  "date":{
+  "today": "اليوم",
+  "yesterday": "أمس",
+  "daysAgo": "منذ $n أيام"
+}
+
+
 
 
 }
