@@ -54,6 +54,7 @@ class TranslationsEn extends Translations {
 	@override late final _TranslationsTransferPageEn transfer_page = _TranslationsTransferPageEn._(_root);
 	@override late final _TranslationsRegisterEn register = _TranslationsRegisterEn._(_root);
 	@override late final _TranslationsLoginEn login = _TranslationsLoginEn._(_root);
+	@override late final _TranslationsDateEn date = _TranslationsDateEn._(_root);
 }
 
 // Path: home
@@ -299,6 +300,18 @@ class _TranslationsLoginEn extends TranslationsLoginAr {
 	@override String get  phone_number => ' Phonenumber';
 }
 
+// Path: date
+class _TranslationsDateEn extends TranslationsDateAr {
+	_TranslationsDateEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get today => 'Today';
+	@override String get yesterday => 'Yesterday';
+	@override String daysAgo({required Object n}) => '${n} days ago';
+}
+
 // Path: home.transfer_buttons
 class _TranslationsHomeTransferButtonsEn extends TranslationsHomeTransferButtonsAr {
 	_TranslationsHomeTransferButtonsEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -507,6 +520,9 @@ extension on TranslationsEn {
 			case 'login.login': return ' Login';
 			case 'login.password': return ' Password ';
 			case 'login. phone_number': return ' Phonenumber';
+			case 'date.today': return 'Today';
+			case 'date.yesterday': return 'Yesterday';
+			case 'date.daysAgo': return ({required Object n}) => '${n} days ago';
 			default: return null;
 		}
 	}

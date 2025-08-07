@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:texa1_app/models/login_response.dart';
 import 'package:texa1_app/translation/translations.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +10,6 @@ class LocalStorageService {
 
   LocalStorageService({required this.sharedPreferences});
 
-  // ==================== Theme ====================
   void setThemeMode(ThemeMode themeMode) {
     sharedPreferences.setString(StorageKeys.themeMode, themeMode.name);
   }
@@ -40,22 +42,28 @@ class LocalStorageService {
   }
 
   // ==================== Token ====================
-  Future<void> saveToken(String token) async {
-    await sharedPreferences.setString(StorageKeys.token, token);
-    debugPrint('Token saved: $token');
+  Future<void> saveLoginResponse(LoginResponse loginResponse) async {
+    await sharedPreferences.setString(
+      StorageKeys.loginResponse,
+      jsonEncode(loginResponse.toJson()),
+    );
   }
 
-  String? getToken() {
-    return sharedPreferences.getString(StorageKeys.token);
+  LoginResponse? getLoginResponse() {
+    final res = sharedPreferences.getString(StorageKeys.loginResponse);
+
+    return res != null ? LoginResponse.fromJson(jsonDecode(res)) : null;
   }
 
-  Future<void> clearToken() async {
-    await sharedPreferences.remove(StorageKeys.token);
+  Future<void> clearLoginRrsponse() async {
+    await sharedPreferences.remove(StorageKeys.loginResponse);
   }
 
   bool isLoggedIn() {
-    return sharedPreferences.containsKey(StorageKeys.token);
+    return sharedPreferences.containsKey(StorageKeys.loginResponse);
   }
+
+  getMyProfile() {}
 }
 
 class StorageKeys {
@@ -63,7 +71,7 @@ class StorageKeys {
   static const String arabicLocale = "ar";
   static const String themeMode = "themeMode";
 
-  static const String token = "auth_token";
+  static const String loginResponse = "login_response";
 }
 
 // import 'package:flutter/material.dart';

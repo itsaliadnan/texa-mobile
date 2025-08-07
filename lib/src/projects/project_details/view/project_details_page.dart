@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:texa1_app/core/provider/message_provider.dart';
+import 'package:texa1_app/core/data/api/message_api.dart';
 import 'package:texa1_app/models/message_model.dart';
 import 'package:texa1_app/core/enums.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
@@ -26,7 +26,7 @@ class ProjectDetailsPage extends HookConsumerWidget {
     final pagingController = usePagingController(
       fetchPage: (pageKey) async {
         final x = await ref
-            .read(messageRepositoryProvider)
+            .read(messageApiProvider)
             .getMessages(page: pageKey, type: selectedMessageType.value.name);
         return x.data;
       },
@@ -190,7 +190,7 @@ class MessageItem extends StatelessWidget {
       child: ListTile(
         tileColor: context.colorScheme.surfaceContainerLowest,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: Text(item.messageType),
+        title: Text(item.receiverPhoneNumber),
         leading: Icon(
           Icons.message_outlined,
           color: context.colorScheme.primary,
@@ -227,6 +227,7 @@ class MessageTypeButton extends StatelessWidget {
   final MessageType messageType;
   final bool isSelected;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

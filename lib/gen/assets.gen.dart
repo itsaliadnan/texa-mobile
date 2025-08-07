@@ -34,6 +34,9 @@ class $LibAssetsIconsGen {
   /// File path: lib/assets/icons/Bar.svg
   String get bar => 'lib/assets/icons/Bar.svg';
 
+  /// File path: lib/assets/icons/Ellipsea.svg
+  String get ellipsea => 'lib/assets/icons/Ellipsea.svg';
+
   /// File path: lib/assets/icons/back.svg
   String get back => 'lib/assets/icons/back.svg';
 
@@ -45,6 +48,9 @@ class $LibAssetsIconsGen {
 
   /// File path: lib/assets/icons/deposit.svg
   String get deposit => 'lib/assets/icons/deposit.svg';
+
+  /// File path: lib/assets/icons/elipseb.svg
+  String get elipseb => 'lib/assets/icons/elipseb.svg';
 
   /// File path: lib/assets/icons/eye.svg
   String get eye => 'lib/assets/icons/eye.svg';
@@ -67,6 +73,9 @@ class $LibAssetsIconsGen {
   /// File path: lib/assets/icons/logout.svg
   String get logout => 'lib/assets/icons/logout.svg';
 
+  /// File path: lib/assets/icons/messageq.svg
+  String get messageq => 'lib/assets/icons/messageq.svg';
+
   /// File path: lib/assets/icons/person_active.svg
   String get personActive => 'lib/assets/icons/person_active.svg';
 
@@ -88,10 +97,12 @@ class $LibAssetsIconsGen {
   /// List of all assets
   List<String> get values => [
     bar,
+    ellipsea,
     back,
     bagActive,
     bagUnactive,
     deposit,
+    elipseb,
     eye,
     home,
     homeActive,
@@ -99,6 +110,7 @@ class $LibAssetsIconsGen {
     line,
     login,
     logout,
+    messageq,
     personActive,
     personUnactive,
     proccesStages,

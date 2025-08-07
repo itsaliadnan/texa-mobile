@@ -1,37 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
+import 'package:texa1_app/core/provider/profile_provider.dart';
+import 'package:texa1_app/src/auth/controller/auth_controller.dart';
 import 'package:texa1_app/src/profile/widgets/language_picker.dart';
 import 'package:texa1_app/src/profile/widgets/notification_settings.dart';
 import 'package:texa1_app/src/profile/widgets/theme_picker.dart';
+import 'package:texa1_app/src/shared/widgets/clipped_container.dart';
 import 'package:texa1_app/translation/translations.g.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       body: Column(
         children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                width: double.infinity,
-                height: 230,
-                decoration: BoxDecoration(
-                  color: context.colorScheme.primary,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(60),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 50,
-                left: 0,
-                right: 0,
-                child: Column(
+          ProfileClippedContainer(
+            height: 230,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+
                   children: [
                     const CircleAvatar(
                       radius: 48,
@@ -40,24 +36,42 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      context.t.profile.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      context.t.profile.phone,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: context.colorScheme.onSurface,
-                      ),
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final profileAsync = ref.watch(
+                          profileControllerProvider,
+                        );
+                        return profileAsync.when(
+                          data: (profileData) => Column(
+                            children: [
+                              Text(
+                                profileData.fullName,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                profileData.phoneNumber,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: context.colorScheme.onSurface,
+                                ),
+                              ),
+                            ],
+                          ),
+                          loading: () => const CircularProgressIndicator(),
+                          error: (error, stack) {
+                            log('cccccc Profile Error: $error');
+                            return Text('Error: $error');
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 30),
           const NotificationPicker(),
@@ -70,7 +84,7 @@ class ProfilePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: FilledButton(
               onPressed: () {
-                context.push('/login');
+                ref.read(authControllerProvider.notifier).logout();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.colorScheme.surfaceContainerLowest,

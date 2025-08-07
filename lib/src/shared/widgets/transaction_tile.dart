@@ -1,27 +1,25 @@
-// lib/shared/widgets/transaction_tile.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:texa1_app/core/enums.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
+import 'package:texa1_app/core/utils/number_format.dart';
+import 'package:texa1_app/models/transactions_model.dart';
+import 'package:texa1_app/translation/translations.g.dart';
 
 class TransactionTile extends StatelessWidget {
-  final String title;
-  final String date;
-  final String amount;
+  final TransactionsModel transaction;
 
-  const TransactionTile({
-    super.key,
-    required this.title,
-    required this.date,
-    required this.amount,
-  });
+  const TransactionTile({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colorScheme;
-
     return Container(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.9,
+      ),
       margin: const EdgeInsets.symmetric(vertical: 6),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
       decoration: BoxDecoration(
         color: colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(12),
@@ -36,7 +34,7 @@ class TransactionTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(2),
 
             child: SvgPicture.asset(
               'lib/assets/icons/home.svg',
@@ -45,34 +43,82 @@ class TransactionTile extends StatelessWidget {
           ),
           const SizedBox(width: 12),
 
-          Expanded(
-            child: Column(
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  date,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colors.onSurface.withValues(alpha: 0.6),
+                SizedBox(
+                  width: 80,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 6,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        transaction.transactionId.toString(),
+
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Cairo',
+                          fontSize: 10,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        transaction.transactionType.translate(context),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: colors.primary,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
+                Spacer(flex: 1),
+                // const SizedBox(width: 120),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        transaction.creationDate.formatDateTime(context.t),
 
-          Text(
-            amount,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: amount.startsWith('-')
-                  ? context.colorScheme.error
-                  : colors.primary,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        transaction.amount.toString(),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 14,
+                          fontFamily: 'Cairo',
+                          fontWeight: FontWeight.w600,
+                          color: colors.onSurface,
+                        ),
+                      ),
+
+                      const SizedBox(height: 4),
+                      Text(
+                        transaction.transactionSign,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 10,
+                          fontFamily: 'Cairo',
+                          fontWeight: FontWeight.w600,
+                          color: colors.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+              ],
             ),
           ),
         ],

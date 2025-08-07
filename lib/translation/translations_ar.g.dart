@@ -55,6 +55,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTransferPageAr transfer_page = TranslationsTransferPageAr.internal(_root);
 	late final TranslationsRegisterAr register = TranslationsRegisterAr.internal(_root);
 	late final TranslationsLoginAr login = TranslationsLoginAr.internal(_root);
+	late final TranslationsDateAr date = TranslationsDateAr.internal(_root);
 }
 
 // Path: home
@@ -300,6 +301,18 @@ class TranslationsLoginAr {
 	String get  phone_number => 'رقم الهاتف';
 }
 
+// Path: date
+class TranslationsDateAr {
+	TranslationsDateAr.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get today => 'اليوم';
+	String get yesterday => 'أمس';
+	String daysAgo({required Object n}) => 'منذ ${n} أيام';
+}
+
 // Path: home.transfer_buttons
 class TranslationsHomeTransferButtonsAr {
 	TranslationsHomeTransferButtonsAr.internal(this._root);
@@ -508,6 +521,9 @@ extension on Translations {
 			case 'login.login': return 'تسجيل الدخول';
 			case 'login.password': return 'كلمة السر ';
 			case 'login. phone_number': return 'رقم الهاتف';
+			case 'date.today': return 'اليوم';
+			case 'date.yesterday': return 'أمس';
+			case 'date.daysAgo': return ({required Object n}) => 'منذ ${n} أيام';
 			default: return null;
 		}
 	}

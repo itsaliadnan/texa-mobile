@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
-import 'package:texa1_app/src/transactions/model/transaction.dart';
+import 'package:texa1_app/models/transactions_model.dart';
+import 'package:texa1_app/src/shared/widgets/transactions_details_widgets.dart';
 import 'package:texa1_app/translation/translations.g.dart';
 
 class TransactionDetailsPage extends HookWidget {
-  final Transaction transaction;
+  final TransactionsModel transaction;
 
   const TransactionDetailsPage({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final isLoading = useState(false);
+    final isLoading = ValueNotifier<bool>(false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -77,6 +77,7 @@ class TransactionDetailsPage extends HookWidget {
                       context.t.transaction_details.to,
                       style: TextStyle(fontSize: 12),
                     ),
+
                     Text(
                       transaction.projectName,
                       style: const TextStyle(
@@ -122,66 +123,9 @@ class TransactionDetailsPage extends HookWidget {
 
             const SizedBox(height: 24),
 
-            GestureDetector(
-              onTap: () async {
-                isLoading.value = true;
-                await Future.delayed(const Duration(seconds: 2));
-                isLoading.value = false;
-                if (context.mounted) {
-                  context.push('/invoice', extra: transaction);
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: context.colorScheme.primary),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.t.transaction_details.extra_info,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(context.t.transaction_details.id),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.confirmation_number_outlined,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(context.t.transaction_details.transaction_id),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(transaction.date),
-                        Row(
-                          children: [
-                            Icon(Icons.calendar_today, size: 18),
-                            SizedBox(width: 6),
-                            Text(context.t.transaction_details.date),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            TransactionDetailsDialog(
+              isLoading: isLoading,
+              transaction: transaction,
             ),
           ],
         ),

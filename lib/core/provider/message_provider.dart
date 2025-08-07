@@ -1,13 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:texa1_app/core/data/remote/api_service.dart';
-import 'package:texa1_app/core/data/repository/message_repository.dart';
+import 'package:texa1_app/core/data/api/message_api.dart';
+
 import 'package:texa1_app/core/enums.dart';
 import 'package:texa1_app/models/message_model.dart';
-
-final messageRepositoryProvider = Provider<MessageRepository>((ref) {
-  final api = ApiService.createNessage();
-  return MessageRepository(api);
-});
 
 final messagesController =
     FutureProvider.family<
@@ -18,7 +13,7 @@ final messagesController =
       final type = (params.messageType);
 
       final res = await ref
-          .read(messageRepositoryProvider)
+          .read(messageApiProvider)
           .getMessages(page: page, type: type.name);
 
       return res.data;

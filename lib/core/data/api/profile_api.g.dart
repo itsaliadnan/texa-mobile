@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'message_api.dart';
+part of 'profile_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'message_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
-class _MessageApi implements MessageApi {
-  _MessageApi(this._dio, {this.baseUrl, this.errorLogger});
+class _ProfileApi implements ProfileApi {
+  _ProfileApi(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -18,31 +18,25 @@ class _MessageApi implements MessageApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<PagingResponse<MessageModel>> getMessages({
-    required int page,
-    required String type,
-  }) async {
+  Future<ProfileModel> getMyProfile() async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'page': page, r'type': type};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<PagingResponse<MessageModel>>(
+    final _options = _setStreamType<ProfileModel>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/messages/mymessages',
+            '/auth/myprofile',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late PagingResponse<MessageModel> _value;
+    late ProfileModel _value;
     try {
-      _value = PagingResponse<MessageModel>.fromJson(
-        _result.data!,
-        (json) => MessageModel.fromJson(json as Map<String, dynamic>),
-      );
+      _value = ProfileModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

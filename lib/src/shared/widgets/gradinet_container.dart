@@ -8,13 +8,14 @@ class GradientContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           stops: const [0.1, 0.7],
           colors: [
-            context.colorScheme.primaryContainer.withValues(alpha: 0.003),
+            context.colorScheme.primaryContainer,
             context.colorScheme.surface,
           ],
         ),

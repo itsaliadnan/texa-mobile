@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
-import 'package:texa1_app/src/transactions/model/transaction.dart';
+import 'package:texa1_app/models/transactions_model.dart';
+import 'package:texa1_app/src/shared/widgets/transactions_details_widgets.dart';
 import 'package:texa1_app/translation/translations.g.dart';
 
 class InvoicePage extends StatelessWidget {
-  final Transaction transaction;
+  final TransactionsModel transaction;
 
   const InvoicePage({super.key, required this.transaction});
 
@@ -12,6 +13,7 @@ class InvoicePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.t;
     final colors = Theme.of(context).colorScheme;
+    final isLoading = ValueNotifier<bool>(false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -59,70 +61,9 @@ class InvoicePage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: context.colorScheme.primary),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'معلومات إضافية',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('#421451'),
-                        Row(
-                          children: [
-                            Icon(Icons.confirmation_number_outlined, size: 18),
-                            SizedBox(width: 6),
-                            Text('رمز المعاملة'),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('كاش'),
-                        Row(
-                          children: [
-                            Icon(Icons.credit_card, size: 18),
-                            SizedBox(width: 6),
-                            Text('طريقة الدفع'),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(transaction.date),
-                        Row(
-                          children: const [
-                            Icon(Icons.calendar_today, size: 18),
-                            SizedBox(width: 6),
-                            Text('التاريخ'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              TransactionDetailsDialog(
+                isLoading: isLoading,
+                transaction: transaction,
               ),
             ],
           ),

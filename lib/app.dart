@@ -27,7 +27,7 @@ class TexaApp extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ref.watch(themeModeProvider),
 
-      routerConfig: appRouter,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

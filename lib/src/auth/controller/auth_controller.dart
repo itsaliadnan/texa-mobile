@@ -1,35 +1,38 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:texa1_app/core/data/repository/auth_repository.dart';
+import 'package:texa1_app/core/data/api/auth_api.dart';
 import 'package:texa1_app/core/provider/local_storage_provider.dart';
 import 'package:texa1_app/models/login_request.dart';
 import 'package:texa1_app/models/login_response.dart';
 
-class AuthController extends StateNotifier<AsyncValue<LoginResponse?>> {
-  final Ref ref;
-  final AuthRepository _authRepository;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-  AuthController(this.ref, this._authRepository) : super(AsyncData(null));
+final authControllerProvider =
+    AsyncNotifierProvider<AuthController, LoginResponse?>(
+      () => AuthController(),
+    );
 
-  Future<void> saveToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('access_token', token);
+class AuthController extends AsyncNotifier<LoginResponse?> {
+  @override
+  Future<LoginResponse?> build() async {
+    final isLoggedIn =
+        ref.read(localStorageProvider).getLoginResponse() != null;
+    log('isLoggedIn: ${ref.read(localStorageProvider).getLoginResponse()}');
+    if (isLoggedIn == false) return null;
+
+    final response = ref.read(localStorageProvider).getLoginResponse();
+    return response;
   }
 
   Future<void> login(LoginRequest request) async {
-    state = const AsyncLoading();
+    final res = await ref.read(authApiProvider).login(request);
+    await ref.read(localStorageProvider).saveLoginResponse(res);
+    ref.invalidateSelf();
+  }
 
-    try {
-      final response = await _authRepository.login(request);
-      final localStorage = ref.read(localStorageProvider);
-      await localStorage.saveToken(response.token);
-
-      debugPrint('✅ تم تسجيل الدخول: ${response.token}');
-      state = AsyncData(response);
-    } catch (e, st) {
-      debugPrint('❌ خطأ أثناء تسجيل الدخول: $e');
-      state = AsyncError(e, st);
-    }
+  Future<void> logout() async {
+    await ref.read(localStorageProvider).clearLoginRrsponse();
+    ref.invalidateSelf();
   }
 }

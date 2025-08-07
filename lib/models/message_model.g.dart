@@ -38,7 +38,7 @@ const _$MessageStatusEnumMap = {
 };
 
 NamedObject _$NamedObjectFromJson(Map<String, dynamic> json) =>
-    NamedObject(name: json['name'] as String);
+    NamedObject(name: json['name'] as String?);
 
 Map<String, dynamic> _$NamedObjectToJson(NamedObject instance) =>
     <String, dynamic>{'name': instance.name};

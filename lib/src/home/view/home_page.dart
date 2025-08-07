@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:texa1_app/constants/paginate.dart';
+import 'package:texa1_app/core/data/api/transactions_api.dart';
 import 'package:texa1_app/core/extensions/context_extensions.dart';
+import 'package:texa1_app/core/hooks/paging_controller_hook.dart';
+import 'package:texa1_app/core/provider/profile_provider.dart';
 import 'package:texa1_app/core/provider/red_dot_notification_provider.dart';
+import 'package:texa1_app/core/provider/transactions_id_provider.dart';
+import 'package:texa1_app/models/transactions_model.dart';
 import 'package:texa1_app/translation/translations.g.dart';
 import 'package:texa1_app/src/shared/widgets/balance_card.dart';
 import 'package:texa1_app/src/shared/widgets/clipped_container.dart';
@@ -18,24 +25,24 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final obscureBalance = useState(true);
     final hasNewNotifications = ref.watch(hasNewNotificationsProvider);
+    final selectedTransactionType = useState<TransactionType>(
+      TransactionType.transfer,
+    );
 
-    final transactions = [
-      {
-        'title': context.t.home.transaction_bexy_title,
-        'date': context.t.home.transaction_bexy_date,
-        'amount': context.t.home.transaction_bexy_amount,
+    final pagingController = usePagingController(
+      fetchPage: (pageKey) async {
+        final x = await ref
+            .read(transactionsApiProvider)
+            .getTransactions(
+              pageNumber: pageKey,
+              pageSize: pageSize,
+              type: selectedTransactionType.value.name,
+            );
+        return x.data;
       },
-      {
-        'title': context.t.home.transaction_alpha_title,
-        'date': context.t.home.transaction_alpha_date,
-        'amount': context.t.home.transaction_alpha_amount,
-      },
-      {
-        'title': context.t.home.transaction_bexy_title,
-        'date': context.t.home.transaction_bexy_date,
-        'amount': context.t.home.transaction_bexy_amount,
-      },
-    ];
+    );
+    final profileAsync = ref.watch(profileControllerProvider);
+
     return Scaffold(
       body: GradientContainer(
         child: Column(
@@ -58,13 +65,24 @@ class HomePage extends HookConsumerWidget {
                                   color: context.colorScheme.onPrimary,
                                 ),
                           ),
-                          Text(
-                            t.home.username,
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: context.colorScheme.onPrimary,
-                                ),
+                          profileAsync.when(
+                            data: (profile) => Text(
+                              profile.fullName,
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: context.colorScheme.onPrimary,
+                                  ),
+                            ),
+                            loading: () => const CircularProgressIndicator(),
+                            error: (error, stack) => Text(
+                              'Error loading profile',
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: context.colorScheme.error,
+                                  ),
+                            ),
                           ),
                         ],
                       ),
@@ -142,17 +160,21 @@ class HomePage extends HookConsumerWidget {
             const SizedBox(height: 8),
 
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: transactions.length,
-                itemBuilder: (_, index) {
-                  final tx = transactions[index];
-                  return TransactionTile(
-                    title: tx['title']!,
-                    date: tx['date']!,
-                    amount: tx['amount']!,
-                  );
-                },
+              child: PagingListener(
+                controller: pagingController,
+                builder: (context, state, fetchNextPage) =>
+                    PagedListView.separated(
+                      state: state,
+                      fetchNextPage: fetchNextPage,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      separatorBuilder: (_, __) => const SizedBox(height: 2),
+                      builderDelegate:
+                          PagedChildBuilderDelegate<TransactionsModel>(
+                            itemBuilder: (context, transaction, index) {
+                              return TransactionTile(transaction: transaction);
+                            },
+                          ),
+                    ),
               ),
             ),
           ],

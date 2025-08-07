@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:texa1_app/core/extensions/context_extensions.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:texa1_app/constants/paginate.dart';
+import 'package:texa1_app/core/data/api/transactions_api.dart';
+import 'package:texa1_app/core/hooks/paging_controller_hook.dart';
+import 'package:texa1_app/core/provider/transactions_provider.dart';
 import 'package:texa1_app/src/shared/widgets/gradinet_container.dart';
 import 'package:texa1_app/src/filter/filter/filter_widgets.dart';
+import 'package:texa1_app/src/shared/widgets/transaction_tile.dart';
 import 'package:texa1_app/translation/translations.g.dart';
-import 'package:texa1_app/src/transactions/model/transaction.dart';
-import 'package:texa1_app/translation/translations.g.dart' as context;
+import 'package:texa1_app/models/transactions_model.dart';
 
-class MoneyTransferPage extends StatelessWidget {
+class MoneyTransferPage extends HookConsumerWidget {
   const MoneyTransferPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final t = context.t;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedTransactionType = useState<TransactionTypes>(
+      TransactionTypes.transfer,
+    );
+    final pagingController = usePagingController(
+      fetchPage: (pageKey) async {
+        final x = await ref
+            .read(transactionsApiProvider)
+            .getTransactions(
+              pageNumber: pageKey,
+              pageSize: pageSize,
+              type: selectedTransactionType.value.name,
+            );
+        return x.data;
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -38,88 +56,21 @@ class MoneyTransferPage extends StatelessWidget {
         ],
       ),
       body: GradientContainer(
-        child: ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: _mockTransactions.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            final tx = _mockTransactions[index];
-            return GestureDetector(
-              onTap: () {
-                context.push('/money-transfer/details', extra: tx);
+        child: PagingListener(
+          controller: pagingController,
+          builder: (context, state, fetchNextPage) => PagedListView.separated(
+            state: state,
+            fetchNextPage: fetchNextPage,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            separatorBuilder: (_, __) => const SizedBox(height: 2),
+            builderDelegate: PagedChildBuilderDelegate<TransactionsModel>(
+              itemBuilder: (context, transaction, index) {
+                return TransactionTile(transaction: transaction);
               },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: context.colorScheme.surfaceContainerLowest,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: SvgPicture.asset(
-                    'lib/assets/icons/home.svg',
-                    width: 18,
-                    height: 18,
-                    colorFilter: ColorFilter.mode(
-                      context.colorScheme.primary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-
-                  title: Text(tx.title),
-                  subtitle: Text(tx.date),
-                  trailing: Text(
-                    tx.amount,
-                    style: TextStyle(
-                      color: context.colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
+            ),
+          ),
         ),
       ),
     );
   }
 }
-
-final _mockTransactions = [
-  Transaction(
-    title: '${context.t.full_transfer_details.bexy}',
-    date: context.t.full_transfer_details.sport_app_date,
-    amount: context.t.full_transfer_details.sport_app_amount,
-    projectName: context.t.full_transfer_details.bexy,
-    projectDescription: context.t.full_transfer_details.sport_app,
-    projectManager: context.t.full_transfer_details.sport_app_manager,
-    projectCreatedAt: context.t.full_transfer_details.sport_app_created_at,
-  ),
-  Transaction(
-    title: '${context.t.full_transfer_details.alpha} ',
-    date: context.t.full_transfer_details.sport_app_date,
-    amount: context.t.full_transfer_details.sport_app_amount,
-    projectName: context.t.full_transfer_details.alpha,
-    projectDescription: context.t.full_transfer_details.sport_app,
-    projectManager: context.t.full_transfer_details.sport_app_manager,
-    projectCreatedAt: context.t.full_transfer_details.sport_app_created_at,
-  ),
-  Transaction(
-    title: '${context.t.full_transfer_details.bexy} ',
-    date: context.t.full_transfer_details.sport_app_date,
-    amount: context.t.full_transfer_details.sport_app_amount,
-    projectName: context.t.full_transfer_details.bexy,
-    projectDescription: context.t.full_transfer_details.sport_app,
-    projectManager: context.t.full_transfer_details.sport_app_manager,
-    projectCreatedAt: context.t.full_transfer_details.sport_app_created_at,
-  ),
-  Transaction(
-    title: '${context.t.full_transfer_details.alpha} ',
-    date: context.t.full_transfer_details.sport_app_date,
-    amount: context.t.full_transfer_details.sport_app_amount,
-    projectName: context.t.full_transfer_details.alpha,
-    projectDescription: context.t.full_transfer_details.sport_app,
-    projectManager: context.t.full_transfer_details.sport_app_manager,
-    projectCreatedAt: context.t.full_transfer_details.sport_app_created_at,
-  ),
-];

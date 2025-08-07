@@ -45,9 +45,9 @@ class MessageModel {
 @JsonSerializable()
 class NamedObject {
   @JsonKey(name: "name")
-  String name;
+  String? name;
 
-  NamedObject({required this.name});
+  NamedObject({this.name});
 
   factory NamedObject.fromJson(Map<String, dynamic> json) =>
       _$NamedObjectFromJson(json);
